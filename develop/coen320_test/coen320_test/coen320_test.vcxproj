@@ -138,8 +138,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\csvReader.cc" />
-    <ClCompile Include="..\..\..\..\dataLineModel.cc" />
+    <ClCompile Include="csvReader.cc" />
+    <ClCompile Include="dataLineModel.cc" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>

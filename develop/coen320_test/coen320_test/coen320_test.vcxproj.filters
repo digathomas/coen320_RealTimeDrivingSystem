@@ -18,10 +18,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\csvReader.cc">
+    <ClCompile Include="csvReader.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\dataLineModel.cc">
+    <ClCompile Include="dataLineModel.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
