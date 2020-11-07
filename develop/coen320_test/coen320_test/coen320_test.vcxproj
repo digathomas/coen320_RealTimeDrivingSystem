@@ -138,7 +138,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\csvReader.cc" />
+    <ClCompile Include="..\..\..\..\dataLineModel.cc" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dataLineModel.h" />
+    <ClInclude Include="csvReader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="DrivingData.csv" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
