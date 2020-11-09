@@ -1,10 +1,16 @@
+#include "TaskScheduler.h"
+
 #include <iostream>
+#include <chrono>
+#include <thread>
+#include <functional>
 
-using namespace std;
 
-int main() {
+int main() 
+{
+	//start program
+	start();
 
-	cout << "hello world\n";
-
+	system("pause");
 	return 0;
 }
