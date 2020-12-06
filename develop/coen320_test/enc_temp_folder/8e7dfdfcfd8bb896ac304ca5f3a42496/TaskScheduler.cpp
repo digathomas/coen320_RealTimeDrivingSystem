@@ -130,9 +130,6 @@ Task* getHighestPriorityTask() {
     const std::lock_guard<std::mutex> lock(taskQueueMutex);
 
     //earliest-deadline-first 
-    //Earliest deadline first (EDF): always schedule the task 
-    //with absolute deadline earliest for execution. 
-    //Optimal algorithm, given a feasible schedule exists.
     int highestPriorityIndex = 0;
     for (int i = 0; i < taskQueue.size(); i++) {
         if (taskQueue[highestPriorityIndex]->getAbsoluteDeadline() > taskQueue[i]->getAbsoluteDeadline()) {
