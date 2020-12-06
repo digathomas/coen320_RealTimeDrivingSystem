@@ -1,26 +1,30 @@
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <mutex>
-#include <functional>
-#include <list>
-#include <iterator>
+#include <iostream.h>
+#include <time.h>
+#include <sys/neutrino.h>
+#include <pthread.h>
+#include <sched.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <vector>
+#include <ctime>
+
 
 using namespace std;
 
 void start();
-void scheduler();
 string getRunningTask();
 
-void queueFuelConsumptionReader();
-void queueEngineSpeedReader();
-void queueEngineCoolantTemperatureReader();
-void queueCurrentGearReader();
-void queueTransmissionOilTemperatureReader();
-void queueVehicleSpeedReader();
-void queueAccelerationSpeedLongitudinalReader();
-void queueIndicationOfBreakSwitchReader();
-void queueTerminalWriter();
+void *QueueFCR(void* interval);
+void *QueueEngineSpeedReader(void* interval);
+void *QueueEngineCoolantTemperatureReader(void* interval);
+void *QueueCurrentGearReader(void* interval);
+void *QueueTransmissionOilTemperatureReader(void* interval);
+void *QueueVehicleSpeedReader(void* interval);
+void *QueueAccelerationSpeedLongitudinalReader(void* interval);
+void *QueueIndicationOfBreakSwitchReader(void* interval);
+void *QueueTerminalWriter(void* interval);
+void *scheduler(void *);
 
 void fuelConsumptionReader();
 void engineSpeedReader();
@@ -32,12 +36,12 @@ void accelerationSpeedLongitudinalReader();
 void indicationOfBreakSwitchReader();
 void terminalWriter();
 
-void taskListener(std::function<void(void)> func, unsigned int interval);
+vector<string> taskQueue;
+pthread_mutex_t taskQueueMutex = PTHREAD_MUTEX_INITIALIZER;
 
+struct timeval;
 
-auto startTime = chrono::high_resolution_clock::now();
-list<string> taskQueue;
-std::mutex taskQueueMutex;
+clock_t time_req;
 
 double fuelConsumption = -1;
 double engineSpeed = -1;
@@ -50,50 +54,51 @@ double indicationOfBreakSwitch = -1;
 
 
 void start() {
-    taskListener(queueFuelConsumptionReader, 10); //fuel consumption listener
-    taskListener(queueEngineSpeedReader, 500); //engine speed listener
-    taskListener(queueEngineCoolantTemperatureReader, 2000); //engine coolant temperature listener
-    taskListener(queueCurrentGearReader, 100); //current gear listener
-    taskListener(queueTransmissionOilTemperatureReader, 5000); //transmission oil temperature listener
-    taskListener(queueVehicleSpeedReader, 100); //vehicle speed listener
-    taskListener(queueAccelerationSpeedLongitudinalReader, 150); //acceleration speed longitudinal listener
-    taskListener(queueIndicationOfBreakSwitchReader, 100); //indication of break switch listener
-    taskListener(queueTerminalWriter, 1000 / 16); //terminal writer listener
-
-    auto startTime = chrono::high_resolution_clock::now();
-
-    scheduler(); // start scheduler loop
+   	
+   	pthread_create (NULL,NULL, QueueEngineSpeedReader,(void *)10); //fuel consumption listener
+    pthread_create (NULL,NULL, QueueEngineSpeedReader,(void *)500); //engine speed listener
+    pthread_create (NULL,NULL, QueueEngineCoolantTemperatureReader,(void *)2000); //engine coolant temperature listener
+    pthread_create (NULL,NULL, QueueCurrentGearReader,(void *)100); //current gear listener
+    pthread_create (NULL,NULL, QueueTransmissionOilTemperatureReader,(void *)5000); //transmission oil temperature listener
+    pthread_create (NULL,NULL, QueueVehicleSpeedReader,(void *)100); //vehicle speed listener
+    pthread_create (NULL,NULL, QueueAccelerationSpeedLongitudinalReader,(void *)150); //acceleration speed longitudinal listener
+    pthread_create (NULL,NULL, QueueIndicationOfBreakSwitchReader,(void *)100); //indication of break switch listener
+    pthread_create (NULL,NULL, QueueTerminalWriter,(void *)63); //terminal writer listener
+    
+	time_req = clock();
+	pthread_create (NULL,NULL, scheduler,NULL); //terminal writer listener
 }
 
-void scheduler() {
+void *scheduler(void *) {
     while (true) {
-        if (taskQueue.size() > 0) {
+    	//cout << "task size: " +  taskQueue.size() << std::endl;
+        if (!taskQueue.empty()) {
             string runningTask = getRunningTask();
-            if (runningTask == "fuelConsumptionReader") {
+            if (runningTask.compare("fuelConsumptionReader")) {
                 fuelConsumptionReader();
             }
-            else if (runningTask == "engineSpeedReader") {
+            else if (runningTask.compare("engineSpeedReader")) {
                 engineSpeedReader();
             }
-            else if (runningTask == "engineCoolantTemperatureReader") {
+            else if (runningTask.compare("engineCoolantTemperatureReader")) {
                 engineCoolantTemperatureReader();
             }
-            else if (runningTask == "currentGearReader") {
+            else if (runningTask.compare("currentGearReader")) {
                 currentGearReader();
             }
-            else if (runningTask == "transmissionOilTemperatureReader") {
+            else if (runningTask.compare("transmissionOilTemperatureReader")) {
                 transmissionOilTemperatureReader();
             }
-            else if (runningTask == "vehicleSpeedReader") {
+            else if (runningTask.compare("vehicleSpeedReader")) {
                 vehicleSpeedReader();
             }
-            else if (runningTask == "accelerationSpeedLongitudinalReader") {
+            else if (runningTask.compare("accelerationSpeedLongitudinalReader")){
                 accelerationSpeedLongitudinalReader();
             }
-            else if (runningTask == "indicationOfBreakSwitchReader") {
+            else if (runningTask.compare("indicationOfBreakSwitchReader")) {
                 indicationOfBreakSwitchReader();
             }
-            else if (runningTask == "terminalWriter") {
+            else if (runningTask.compare("terminalWriter")) {
                 terminalWriter();
             }
         }
@@ -101,55 +106,84 @@ void scheduler() {
 }
 
 string getRunningTask() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
+    pthread_mutex_lock(&taskQueueMutex);
     string runningTask = taskQueue.front();
-    taskQueue.pop_front();
+    taskQueue.erase(taskQueue.begin());
+    pthread_mutex_unlock(&taskQueueMutex);
     return runningTask;
 }
 
-void queueFuelConsumptionReader() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("fuelConsumptionReader");
+void *QueueEngineSpeedReader(void* interval) {
+	while(true){
+	    pthread_mutex_lock(&taskQueueMutex);
+	    taskQueue.push_back("engineSpeedReader");
+	    //cout << "engineSpeedReader" << endl;
+	    pthread_mutex_unlock(&taskQueueMutex);
+	    delay ((int)interval);
+	}
 }
 
-void queueEngineSpeedReader() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("engineSpeedReader");
+void *QueueEngineCoolantTemperatureReader(void* interval) {
+	while (true){
+	    pthread_mutex_lock(&taskQueueMutex);
+	    taskQueue.push_back("engineCoolantTemperatureReader");
+	    pthread_mutex_unlock(&taskQueueMutex);
+	    delay ((int)interval);
+	}
 }
 
-void queueEngineCoolantTemperatureReader() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("engineCoolantTemperatureReader");
+void *QueueCurrentGearReader(void* interval) {
+	while (true){
+	    pthread_mutex_lock(&taskQueueMutex);
+	    taskQueue.push_back("currentGearReader");
+	    pthread_mutex_unlock(&taskQueueMutex);
+		delay ((int)interval);
+	}
 }
 
-void queueCurrentGearReader() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("currentGearReader");
+void *QueueTransmissionOilTemperatureReader(void* interval) {
+	while (true){
+	    pthread_mutex_lock(&taskQueueMutex);
+	    taskQueue.push_back("transmissionOilTemperatureReader");
+	    pthread_mutex_unlock(&taskQueueMutex);
+	    delay ((int)interval);
+	}
 }
 
-void queueTransmissionOilTemperatureReader() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("transmissionOilTemperatureReader");
+void *QueueVehicleSpeedReader(void* interval) {
+	while (true){
+	    pthread_mutex_lock(&taskQueueMutex);
+	    taskQueue.push_back("vehicleSpeedReader");
+	    pthread_mutex_unlock(&taskQueueMutex);
+	    delay ((int)interval);
+	}
 }
 
-void queueVehicleSpeedReader() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("vehicleSpeedReader");
+void *QueueAccelerationSpeedLongitudinalReader(void* interval) {
+	while (true){
+	    pthread_mutex_lock(&taskQueueMutex);
+	    taskQueue.push_back("accelerationSpeedLongitudinalReader");
+	    pthread_mutex_unlock(&taskQueueMutex);
+	    delay ((int)interval);
+	}
 }
 
-void queueAccelerationSpeedLongitudinalReader() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("accelerationSpeedLongitudinalReader");
+void *QueueIndicationOfBreakSwitchReader(void* interval) {
+	while (true){
+	    pthread_mutex_lock(&taskQueueMutex);
+	    taskQueue.push_back("indicationOfBreakSwitchReader");
+	    pthread_mutex_unlock(&taskQueueMutex);
+	    delay ((int)interval);
+	}
 }
 
-void queueIndicationOfBreakSwitchReader() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("indicationOfBreakSwitchReader");
-}
-
-void queueTerminalWriter() {
-    const std::lock_guard<std::mutex> lock(taskQueueMutex);
-    taskQueue.push_back("terminalWriter");
+void *QueueTerminalWriter(void* interval) {
+	while (true){
+	    pthread_mutex_lock(&taskQueueMutex);
+	    taskQueue.push_back("terminalWriter");
+	    pthread_mutex_unlock(&taskQueueMutex);
+	    delay ((int)interval);
+	}
 }
 
 void fuelConsumptionReader() {
@@ -185,13 +219,13 @@ void indicationOfBreakSwitchReader() {
 }
 
 void terminalWriter() {
-    auto currentTime = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+   clock_t newTime = clock()-time_req;
+   float durationTime = (float)time_req/CLOCKS_PER_SEC;
 
     system("CLS");
     std::cout << "===================================\n";
-    std::cout << "Tasks in queue: " << taskQueue.size() << endl;
-    std::cout << "TIME: " << (durationTime.count())/1000 << "s" << std::endl;
+    std::cout << "Tasks in Queue: " << taskQueue.size() << endl;
+    std::cout << "TIME: " << durationTime << "s" << std::endl;
     std::cout << "Fuel Consumption: " << fuelConsumption << std::endl;
     std::cout << "Engine Speed: " << engineSpeed << std::endl;
     std::cout << "Engine Coolant Temperature: " << engineCoolantTemperature << std::endl;
@@ -203,13 +237,4 @@ void terminalWriter() {
     std::cout << "===================================\n";
 }
 
-void taskListener(std::function<void(void)> function, unsigned int interval)
-{
-    std::thread([function, interval]() {
-        while (true)
-        {
-            function();
-            std::this_thread::sleep_for(std::chrono::milliseconds(interval));
-        }
-        }).detach();
-}
+
