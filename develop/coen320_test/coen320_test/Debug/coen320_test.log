@@ -1,18 +1,19 @@
 ﻿  TaskScheduler.cpp
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(170,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(171,46): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(180,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(181,46): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(189,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(190,46): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(198,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(199,46): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(207,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(208,46): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(216,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(217,46): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(225,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(226,46): warning C4018: '<': signed/unsigned mismatch
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(234,24): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(235,46): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(134,23): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(241,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(244,32): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(252,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(253,32): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(261,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(262,32): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(270,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(271,32): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(279,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(280,32): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(288,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(289,32): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(297,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(298,32): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(306,17): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(307,32): warning C4018: '<': signed/unsigned mismatch
   coen320_test.vcxproj -> C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\Debug\coen320_test.exe

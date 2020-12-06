@@ -141,11 +141,13 @@
     <ClCompile Include="csvReader.cpp" />
     <ClCompile Include="dataLineModel.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Task.cpp" />
     <ClCompile Include="TaskScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="csvReader.h" />
     <ClInclude Include="dataLineModel.h" />
+    <ClInclude Include="Task.h" />
     <ClInclude Include="TaskScheduler.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
