@@ -5,7 +5,6 @@
 #include <thread>
 #include <functional>
 
-
 int main() 
 {
 	//start program

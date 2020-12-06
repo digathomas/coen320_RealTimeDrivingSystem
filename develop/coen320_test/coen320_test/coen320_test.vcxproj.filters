@@ -18,18 +18,24 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Task.cpp">
+    <ClCompile Include="TaskScheduler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TaskScheduler.cpp">
+    <ClCompile Include="csvReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dataLineModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Task.h">
+    <ClInclude Include="TaskScheduler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TaskScheduler.h">
+    <ClInclude Include="csvReader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dataLineModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

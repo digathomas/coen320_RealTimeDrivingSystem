@@ -5,6 +5,9 @@
 #include <functional>
 #include <list>
 #include <iterator>
+#include <math.h>
+
+#include "csvReader.h"
 
 using namespace std;
 
@@ -34,8 +37,7 @@ void terminalWriter();
 
 void taskListener(std::function<void(void)> func, unsigned int interval);
 
-
-auto startTime = chrono::high_resolution_clock::now();
+chrono::high_resolution_clock::time_point startTime;
 list<string> taskQueue;
 std::mutex taskQueueMutex;
 
@@ -48,8 +50,16 @@ double vehicleSpeed = -1;
 double accelerationSpeedLongitudinal = -1;
 double indicationOfBreakSwitch = -1;
 
+std::vector<dataLineModel> model;
+
 
 void start() {
+    //read csv file and store data in vector
+    csvReader reader = csvReader();
+    model = reader.read_csv("./DrivingData.csv");
+    system("pause");
+
+    //start all timers that trigger events to add a task to the ready queue
     taskListener(queueFuelConsumptionReader, 10); //fuel consumption listener
     taskListener(queueEngineSpeedReader, 500); //engine speed listener
     taskListener(queueEngineCoolantTemperatureReader, 2000); //engine coolant temperature listener
@@ -60,8 +70,10 @@ void start() {
     taskListener(queueIndicationOfBreakSwitchReader, 100); //indication of break switch listener
     taskListener(queueTerminalWriter, 1000 / 16); //terminal writer listener
 
-    auto startTime = chrono::high_resolution_clock::now();
+    //start time
+    startTime = chrono::high_resolution_clock::now();
 
+    //start scheduler
     scheduler(); // start scheduler loop
 }
 
@@ -153,35 +165,76 @@ void queueTerminalWriter() {
 }
 
 void fuelConsumptionReader() {
-    fuelConsumption++;
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+    int intCurrentTime = floor(durationTime.count() / 1000);
+    if (intCurrentTime > 0 && intCurrentTime < model.size()) {
+        fuelConsumption = model.at(intCurrentTime).fuel_consumption();
+    }
 }
 
 void engineSpeedReader() {
     engineSpeed++;
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+    int intCurrentTime = floor(durationTime.count() / 1000);
+    if (intCurrentTime > 0 && intCurrentTime < model.size()) {
+        engineSpeed = model.at(intCurrentTime).engine_speed();
+    }
 }
 
 void engineCoolantTemperatureReader() {
-    engineCoolantTemperature++;
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+    int intCurrentTime = floor(durationTime.count() / 1000);
+    if (intCurrentTime > 0 && intCurrentTime < model.size()) {
+        engineCoolantTemperature = model.at(intCurrentTime).engine_coolant();
+    }
 }
 
 void currentGearReader() {
-    currentGear++;
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+    int intCurrentTime = floor(durationTime.count() / 1000);
+    if (intCurrentTime > 0 && intCurrentTime < model.size()) {
+        currentGear = model.at(intCurrentTime).current_gear();
+    }
 }
 
 void transmissionOilTemperatureReader() {
-    transmissionOilTemperature++;
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+    int intCurrentTime = floor(durationTime.count() / 1000);
+    if (intCurrentTime > 0 && intCurrentTime < model.size()) {
+        transmissionOilTemperature = model.at(intCurrentTime).transmission_oil_temperature();
+    }
 }
 
 void vehicleSpeedReader() {
-    vehicleSpeed++;
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+    int intCurrentTime = floor(durationTime.count() / 1000);
+    if (intCurrentTime > 0 && intCurrentTime < model.size()) {
+        vehicleSpeed = model.at(intCurrentTime).vehicle_speed();
+    }
 }
 
 void accelerationSpeedLongitudinalReader() {
-    accelerationSpeedLongitudinal++;
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+    int intCurrentTime = floor(durationTime.count() / 1000);
+    if (intCurrentTime > 0 && intCurrentTime < model.size()) {
+        accelerationSpeedLongitudinal = model.at(intCurrentTime).acceleration_speed_longitudinal();
+    }
 }
 
 void indicationOfBreakSwitchReader() {
-    indicationOfBreakSwitch++;
+    auto currentTime = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double, std::milli> durationTime = currentTime - startTime;
+    int intCurrentTime = floor(durationTime.count() / 1000);
+    if (intCurrentTime > 0 && intCurrentTime < model.size()) {
+        indicationOfBreakSwitch = model.at(intCurrentTime).indication_of_break_switch();
+    }
 }
 
 void terminalWriter() {
