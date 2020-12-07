@@ -1,2 +1,5 @@
-﻿  TaskScheduler.cpp
-  coen320_test.vcxproj -> C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\Debug\coen320_test.exe
+﻿  main.cpp
+c1xx : fatal error C1083: Cannot open source file: 'main.cpp': No such file or directory
+  TaskScheduler.cpp
+C:\Users\Thomas Tran\Workspace\coen320_RealTimeDrivingSystem\develop\coen320_test\coen320_test\TaskScheduler.cpp(14,10): fatal error C1083: Cannot open include file: 'iostream.h': No such file or directory
+  Generating Code...

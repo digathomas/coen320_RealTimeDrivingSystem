@@ -7,8 +7,6 @@
 
 void start();
 void scheduler();
-void taskListener(std::function<void(void)> func, unsigned int interval);
-void queueFuelConsumptionReader();
 void queueTerminalWriter();
 void fuelConsumptionReader();
 void terminalWriter();
